@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuminoDish · 深海荧光培养皿音乐盒</title>
+    <meta
+      name="description"
+      content="A bioluminescent cellular automata music box in the browser. Paint glowing plankton and listen as Conway's Game of Life evolves into ethereal deep-sea music."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23041422' stroke='%234de8df' stroke-width='2.5'/%3E%3Ccircle cx='26' cy='26' r='8' fill='%236ef7e8' opacity='0.9'/%3E%3Ccircle cx='40' cy='38' r='6' fill='%2378b4ff' opacity='0.85'/%3E%3Ccircle cx='38' cy='22' r='4' fill='%2388ffd0' opacity='0.8'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="top-bar">
+        <div class="brand">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <div>
+            <h1>LuminoDish</h1>
+            <p class="subtitle">深海荧光培养皿音乐盒</p>
+          </div>
+        </div>
+
+        <div class="hud-stats" aria-live="polite">
+          <span class="stat-pill">代数 <strong id="stat-gen">0</strong></span>
+          <span class="stat-pill">荧光细胞 <strong id="stat-alive">0</strong></span>
+        </div>
+
+        <div class="top-actions">
+          <button id="btn-share" class="glass-btn" title="复制当前深海乐曲链接">
+            <span class="btn-icon">🔗</span>
+            <span>分享乐曲</span>
+          </button>
+          <button id="btn-record" class="glass-btn" title="录制带声音的音画短片 (WebM)">
+            <span class="rec-dot" aria-hidden="true"></span>
+            <span id="record-label">录制导出</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="dish-stage">
+        <div class="dish-wrapper">
+          <canvas id="dish-canvas" aria-label="深海荧光培养皿画布"></canvas>
+          <div id="start-overlay" class="start-overlay">
+            <button id="btn-wake" class="wake-btn">
+              <span class="wake-glow" aria-hidden="true"></span>
+              <span>点击唤醒深海微光</span>
+              <small>点击或拖拽培养皿播种荧光细胞 · 空格播放/暂停</small>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <footer class="control-dock" aria-label="音乐盒控制面板">
+        <div class="dock-row primary-row">
+          <button id="btn-play" class="glass-btn primary" title="播放 / 暂停 (Space)">
+            <span id="play-icon">▶</span>
+            <span id="play-label">播放</span>
+          </button>
+          <button id="btn-step" class="glass-btn" title="手动演化一代 (S)">演化一代</button>
+          <button id="btn-clear" class="glass-btn" title="清空培养皿 (C)">清空</button>
+
+          <label class="control-group" title="选择预设生物图鉴">
+            <span class="label-text">生物图鉴</span>
+            <select id="select-preset"></select>
+          </label>
+
+          <label class="control-group" title="选择音阶">
+            <span class="label-text">音阶</span>
+            <select id="select-scale"></select>
+          </label>
+
+          <label class="control-group" title="选择合成器音色">
+            <span class="label-text">音色</span>
+            <select id="select-synth"></select>
+          </label>
+        </div>
+
+        <div class="dock-row secondary-row">
+          <label class="control-group slider-group" title="调整扫描节拍速度">
+            <span class="label-text">节拍 <strong id="bpm-value">92</strong> BPM</span>
+            <input id="slider-bpm" type="range" min="60" max="150" step="1" value="92" />
+          </label>
+
+          <label class="control-group" title="每经过多少小节演化一次生命游戏">
+            <span class="label-text">演化频率</span>
+            <select id="select-evolve">
+              <option value="1">每 1 小节</option>
+              <option value="2">每 2 小节</option>
+              <option value="0">冻结当前</option>
+            </select>
+          </label>
+
+          <button id="btn-autoheal" class="toggle-chip active" aria-pressed="true" title="灭绝或死循环时自动滴入新孢子，适合无限助眠">
+            <span class="chip-dot"></span>
+            生态自愈
+          </button>
+
+          <button id="btn-ambient" class="toggle-chip active" aria-pressed="true" title="开启或关闭微弱的深海电流与底噪">
+            <span class="chip-dot"></span>
+            海底氛围
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
